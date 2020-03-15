@@ -1,6 +1,26 @@
 //guides add into HTML to DOM
 let guidesList = document.querySelector('.guides');
+let logOutLinks = document.querySelectorAll('.logged-out')
+let logInLinks = document.querySelectorAll('.logged-in');
 
+let setupIU = function (user) {
+    if (user) {
+        logInLinks.forEach(element => {
+            element.style.display = "block";
+        });
+        logOutLinks.forEach(element => {
+            element.style.display = "none";
+        });
+    } else {
+        // logInLinks.style.display = "none";
+        logInLinks.forEach(element => {
+            element.style.display = "none";
+        });
+        logOutLinks.forEach(element => {
+            element.style.display = "block";
+        });
+    }
+}
 
 
 let setupGuide = function (data) {

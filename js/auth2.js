@@ -7,15 +7,35 @@ auth.onAuthStateChanged(user => {
     console.log(user);
     if (user) {
         console.log("User LOG in", user);
-        db.collection('guides').get().then(takeDocs => {
+        db.collection('guides').onSnapshot(takeDocs => {
             console.log(takeDocs.docs);
             setupGuide(takeDocs.docs);
+            setupIU(user);
         })
 
     } else {
         console.log("User is log out!!!");
         setupGuide([]);
+        setupIU(user);
     }
+})
+
+
+// create form  Reate Guide
+let createForm = document.querySelector(".create-form");
+createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    db.collection('guides').add({
+        title: createForm['title'].value,
+        content: createForm['content'].value
+    }).then(() => {
+        ////
+        let modalcr = document.querySelector('#modal-create');
+        M.Modal.getInstance(modalcr).close();
+        createForm.reset();
+        ////
+    })
 })
 
 //SIGN UP
